@@ -1,4 +1,8 @@
-# e2e-mlops
+# [DEPRECATED] e2e-mlops
+
+> **NOTE:** This repository is deprecated as of 2022/11/11. The end-to-end MLOps workflow demonstrated in this project was designed with recommended tooling available at the time. Since the release of this repo, Databricks has built a product-supported MLOps template, currently in private preview. If you would like to express interest and enroll in a private preview version of this template, please complete [this questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSfHXCmkbsEURjQQvtUGObgh2D5q1eD4YRHnUxZ0M4Hu0W63WA/viewform).
+
+---
 
 This repo is intended to demonstrate an end-to-end MLOps workflow on Databricks, where a model is deployed along with its ancillary pipelines to a specified (currently single) Databricks workspace.
 Each pipeline (e.g model training pipeline, model deployment pipeline) is deployed as a [Databricks job](https://docs.databricks.com/data-engineering/jobs/jobs.html), where these jobs are deployed to a Databricks workspace using Databricks Labs' [`dbx`](https://dbx.readthedocs.io/en/latest/index.html) tool. 
@@ -79,7 +83,7 @@ The following outlines the workflow to demo the repo.
     - Outlined below are the detailed steps to do this:
 
         1. Run the multitask `PROD-telco-churn-initial-model-train-register` job via an automated job cluster in the prod environment
-           (NOTE: multitask jobs can only be run via `dbx deploy; dbx launch` currently).
+           - **NOTE:** multitask jobs can only be run via `dbx deploy; dbx launch` currently).
            ```
            dbx deploy --jobs=PROD-telco-churn-initial-model-train-register --environment=prod --files-only
            dbx launch --job=PROD-telco-churn-initial-model-train-register --environment=prod --as-run-submit --trace
@@ -93,7 +97,8 @@ The following outlines the workflow to demo the repo.
             1. Delete MLflow experiment if exists.
             1. Delete Feature Table if exists.
         1. Feature table creation task steps (`feature-table-creation`)
-            1. Creates new churn_features feature table in the Feature Store
+            1. Creates new churn_features feature table in the Feature Store. 
+                - **NOTE:** `ibm_telco_churn.bronze_customers` is a table created from the following [dataset](https://www.kaggle.com/datasets/yeanzc/telco-customer-churn-ibm-dataset). This will not be automatically available in your Databricks workspace. The user will have to create this table (or update the `feature-table-creation` config to point at this dataset) in your own workspace.
         1. Model train task steps (`model-train`)
             1. Train initial “baseline” classifier (RandomForestClassifier - `max_depth=4`) 
                 - **NOTE:** no changes to config need to be made at this point
